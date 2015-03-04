@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+  	<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TP1 SIO 6013</title>
+    <link rel="stylesheet" href="css/link.css"/>
+    <link rel="stylesheet" href="css/table.css"/>
+  </head>
+ 
+  <body>
+    <table>    
+    <form>
+    <tr><td>TP1 SIO 6013</td><td>search</td><td><input id="search-input" type="text" size="35" value="serach with email"/><button id="search-button">Go</button></td></tr>
+    </form>
+    <form>
+    <tr><td>Name</td><td>Phone</td><td>Email</td></tr>
+    <tr><td><input id="name-input" type="text" size="35" required="required"/></td>
+    <td><input id="phone-input" type="text" size="15" required="required"/></td>
+    <td><input id="email-input" type="email" size="20" required="required"/></td>    
+    </table>
+    <button id="add-contact" class="button">Add</button>
+    <button id="update-contact" class="button">Update</button>
+    </form>
+    <table id="contact-table"></table>
+    <button id="clear-contacts" class="button">Clear</button>
+    <button id="load-contacts" class="button">Load</button>
+    <button id="save-contacts" class="button">Save</button>
+    <script type="application/dart" src="index.dart"></script>
+    <script src="packages/browser/dart.js"></script>
+  </body>
+</html>

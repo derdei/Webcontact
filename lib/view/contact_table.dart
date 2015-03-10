@@ -45,8 +45,11 @@ class ContactTable {
       if (contact != null) {
         contact.name = nameInput.value;
         contact.phone = phoneInput.value;
-        contact.email = emailInput.value;  
+        //contact.email = emailInput.value;  
       }   
+      
+      window.localStorage['contacts'] = JSON.encode(contacts.toJson());
+    
     });
     
    addContact = document.querySelector('#add-contact');
@@ -68,21 +71,6 @@ class ContactTable {
       }
       
     });
-    
-    updateContact = document.querySelector('#update-contact');
-        updateContact.onClick.listen((e) {
-          var contact = new Contact();
-          var value = emailInput.value;
-                var test = contacts.find(value);
-          if(((nameInput.value != "")&&(phoneInput.value != "")&&(emailInput.value!=""))||(test != null)){
-//          contact.name = nameInput.value;
-//          contact.phone = phoneInput.value;
-//          contact.email = emailInput.value;
-//          contact.updateContact(contact, nameInput.value, nameInput.value);
-          
-          }
-        });
-    
                
     contactTable = document.querySelector('#contact-table');
     clearContacts = document.querySelector('#clear-contacts');
@@ -200,48 +188,3 @@ class ContactTable {
     return null;
   }
 }
-
-
-//react = (Action action, [Contact contact, String propertyName, Object oldValue]) {
-//     switch (action) {
-//       case Action.ADD:
-//         addRowData(contact.name, contact.phone, contact.email);
-//         emailInput.select();
-//         return true;
-//       case Action.CLEAR:
-//         contactTable.children.clear();
-//         nameInput.value = '';
-//         phoneInput.value = '';
-//         emailInput.value = '';
-//         addTableCaption('Contacts');
-//         addColumnTitles();
-//         return true;
-//       case Action.REMOVE: 
-//         var row = findRow(contact.email);
-//         row.remove();
-//         //nameInput.value = '';
-//         //phoneInput.value = '';
-//         //emailInput.value = '';
-//         return true;
-//       case Action.UPDATE:
-//         var row = findRow(contact.email);
-//         {
-//           row.children[0].text = contact.name;
-//           row.children[1].text = contact.phone;
-//           row.children[2].text = contact.email;
-//           return true;
-//         }
-//       return false;
-//     }
-//   };
-//   contacts.startReaction(react);
-
-//clearContacts = document.querySelector('#clear-contacts');
-//              clearContacts.onClick.listen((e) {
-//                contactTable.children.clear();
-//                nameInput.value = '';
-//                phoneInput.value = '';
-//                emailInput.value = '';
-//                addTableCaption('Contacts');
-//                addColumnTitles();
-//                     });

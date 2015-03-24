@@ -14,6 +14,22 @@ class ContactTable {
   ButtonElement loadContacts;
   ButtonElement saveContacts;
   
+  bool validateEmail(String email){
+       var testEmail1 = false;
+       var testEmail2 = false;
+
+       for(var i = 0; i < email.length; i++) {
+         if(email[i]=='@')
+             testEmail1 = true;
+         else
+           if(email[i]=='.')
+             testEmail2 = true;
+       }  
+       if((testEmail1)&&(testEmail2)) 
+         return true;
+       else
+         return false;   
+       }
   ContactTable() {
     contacts = new ContactModel().contacts;
     
@@ -35,42 +51,49 @@ class ContactTable {
           nameInput.value = contact.name;
           phoneInput.value = contact.phone;
           emailInput.value = contact.email;
+          emailInput.disabled=true;
           }  
       });
-        
-    updateContact = document.querySelector('#update-contact');
-    updateContact.onClick.listen((e) {
-      var value = emailInput.value;
-      var contact = contacts.find(value);
-      if (contact != null) {
-        contact.name = nameInput.value;
-        contact.phone = phoneInput.value;
-        //contact.email = emailInput.value;  
-      }   
-      
-      window.localStorage['contacts'] = JSON.encode(contacts.toJson());
-    
-    });
-    
-   addContact = document.querySelector('#add-contact');
-    addContact.onClick.listen((e) {
-      var contact = new Contact();
-      contact.name = nameInput.value;
-      contact.phone = phoneInput.value;
-      contact.email = emailInput.value;
-      
-      var value = emailInput.value;
-      var test = contacts.find(value);
-              
-      if(((nameInput.value != "")&&(phoneInput.value != "")&&(emailInput.value!=""))||(test != null)){
-          addRowData(contact.name, contact.phone, contact.email);
-          contacts.add(contact);
-          nameInput.value = '';
-          phoneInput.value = '';
-          emailInput.value = '';
-      }
-      
-    });
+       
+    addContact = document.querySelector('#add-contact');
+    LabelElement message = querySelector("#message");
+
+   addContact.onClick.listen((e) {
+   var contact = new Contact();
+   contact.name = nameInput.value;
+   contact.phone = phoneInput.value;
+   contact.email = emailInput.value;
+   var value = emailInput.value;
+   var test = contacts.find(value);
+   var error = false;
+   message.text = '';
+
+   if(nameInput.value == ""){
+     message.text = 'name is mandatory; ${message.text}';
+     error = true;
+   }
+   if(phoneInput.value == ""){
+     message.text = 'phone is mandatory; ${message.text}';
+         error = true;
+   }
+   if(emailInput.value == ""){
+       message.text = 'email is mandatory; ${message.text}';
+           error = true;
+     }
+   if (!(validateEmail(emailInput.value))) {
+              message.text = '@ and . in email is mandatory; ${message.text}';
+              error = true;
+            }
+   
+   if ((!error) && (validateEmail(emailInput.value))){
+   addRowData(contact.name, contact.phone, contact.email);
+   contacts.add(contact);
+   window.localStorage['contacts'] = JSON.encode(contacts.toJson());
+   nameInput.value = '';
+   phoneInput.value = '';
+   emailInput.value = '';
+   }
+   });
                
     contactTable = document.querySelector('#contact-table');
     clearContacts = document.querySelector('#clear-contacts');
@@ -162,11 +185,32 @@ class ContactTable {
       emailInput.disabled=true;
     });
     
+    
+    updateContact = document.querySelector('#update-contact');
+      updateContact.onClick.listen((e) {
+        var value = emailInput.value;
+        var contact = contacts.find(value);
+        if (contact != null) {
+          contact.name = nameInput.value;
+          contact.phone = phoneInput.value;
+          window.localStorage['contacts'] = JSON.encode(contacts.toJson());
+        //window.location.reload();
+          if (contacts.isEmpty)        
+            contacts.fromJson(JSON.decode(window.localStorage['contacts']));
+          contactTable.children.clear();
+        contacts.forEach((contact) => addRowData(contact.name, contact.phone, contact.email));
+        nameInput.value = '';
+          phoneInput.value = '';
+          emailInput.value = '';
+         }
+      });
+      
+    
     removeCell.onClick.listen((e) {  
       var value = emailCell.text;
       var contact = contacts.find(value);
       contacts.remove(contact);
-     //contacts.remove(contacts.find(emailCell.text));
+      window.localStorage['contacts'] = JSON.encode(contacts.toJson());
       var row = findRow(emailCell.text);
       row.remove();
       nameInput.value = '';

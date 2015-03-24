@@ -39,6 +39,9 @@ class Contact extends ConceptEntity<Contact> {
      c._name=name;
      c._phone=phone;
    }
+   
+ 
+   
   Contact newEntity() => new Contact();
 
   Map<String, Object> toJson() {

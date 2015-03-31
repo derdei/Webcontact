@@ -1,0 +1,35 @@
+ex06
+
+16/20
+
+(-1)
+.gitignore ?
+
+(-1)
+après la recherche, le champ email est en lecture seulement;
+ne peut pas ajouter un nouveau contact!?
+
+(-1)
+peut ajouter le même contact deux fois
+
+(-1)
+"save" ne fonctionne pas
+
+  String _name;
+  String get name => _name;
+  set name(String name) {
+    var oldValue = _name;
+    _name = name;
+  }
+-->
+  String name;
+
+  bool validateEmail(String email){
+       var testEmail1 = false;
+       var testEmail2 = false;
+
+       -->
+
+  bool validateEmail(String email) {
+    var testEmail1 = false;
+    var testEmail2 = false;
